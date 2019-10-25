@@ -1,6 +1,6 @@
 //
 //  AppCoordinator.swift
-//  Contacts
+//  WorkContacts
 //
 //  Created by @esesmuedgars
 //

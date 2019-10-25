@@ -1,14 +1,13 @@
 //
-//  ContactsTests.swift
-//  ContactsTests
+//  WorkContactsTests.swift
+//  WorkContactsTests
 //
 //  Created by @esesmuedgars
 //
 
 import XCTest
-@testable import Contacts
 
-class ContactsTests: XCTestCase {
+class WorkContactsTests: XCTestCase {
 
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -25,7 +24,7 @@ class ContactsTests: XCTestCase {
 
     func testPerformanceExample() {
         // This is an example of a performance test case.
-        self.measure {
+        measure {
             // Put the code you want to measure the time of here.
         }
     }

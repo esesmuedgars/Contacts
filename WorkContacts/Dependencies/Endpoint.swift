@@ -1,6 +1,6 @@
 //
 //  Endpoint.swift
-//  Contacts
+//  WorkContacts
 //
 //  Created by @esesmuedgars
 //

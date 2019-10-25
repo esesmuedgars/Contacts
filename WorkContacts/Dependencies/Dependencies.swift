@@ -1,6 +1,6 @@
 //
 //  Dependencies.swift
-//  Contacts
+//  WorkContacts
 //
 //  Created by @esesmuedgars
 //
