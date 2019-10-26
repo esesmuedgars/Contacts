@@ -6,6 +6,7 @@
 //
 
 import Contacts
+import ContactsUI
 
 enum ContactsServiceError: Error {
     case permissionDeniedOrRestricted
@@ -72,8 +73,9 @@ final class ContactsService: ContactsServiceProtocol {
 
             let keysToFetch = [
                 CNContactGivenNameKey,
-                CNContactFamilyNameKey
-            ] as [CNKeyDescriptor]
+                CNContactFamilyNameKey,
+                CNContactViewController.descriptorForRequiredKeys()
+            ] as! [CNKeyDescriptor]
 
             var contacts = [CNContact]()
             for container in containers {

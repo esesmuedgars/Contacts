@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import ContactsUI
 
 protocol Coordinator {
     func startCoordinatorFlow()
@@ -19,6 +20,7 @@ private extension Coordinator {
 
 protocol CoordinatorFlowDelegate: AnyObject {
     func presentDetailsViewController()
+    func pushContactViewController(for: CNContact)
 }
 
 final class AppCoordinator: Coordinator, CoordinatorFlowDelegate {
@@ -53,5 +55,11 @@ final class AppCoordinator: Coordinator, CoordinatorFlowDelegate {
         viewController.viewModel = viewModel
 
         navigationController.present(viewController, animated: true)
+    }
+
+    func pushContactViewController(for contact: CNContact) {
+        let viewController = CNContactViewController(for: contact)
+
+        navigationController.pushViewController(viewController, animated: true)
     }
 }
