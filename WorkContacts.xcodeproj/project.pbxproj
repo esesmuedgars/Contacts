@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		720F67062363B39C003DDBEF /* WorkContactsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720F67052363B39C003DDBEF /* WorkContactsTests.swift */; };
+		720F670E2363B523003DDBEF /* ContactsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720F670D2363B523003DDBEF /* ContactsService.swift */; };
 		722DFB2A23637A04005E9BAE /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 722DFB2923637A04005E9BAE /* DetailsViewController.swift */; };
 		722DFB2C23637A50005E9BAE /* DetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 722DFB2B23637A50005E9BAE /* DetailsViewModel.swift */; };
 		722DFB2E23638260005E9BAE /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 722DFB2D23638260005E9BAE /* APIService.swift */; };
@@ -42,6 +43,7 @@
 		720F67032363B39C003DDBEF /* WorkContactsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WorkContactsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		720F67052363B39C003DDBEF /* WorkContactsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkContactsTests.swift; sourceTree = "<group>"; };
 		720F67072363B39C003DDBEF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		720F670D2363B523003DDBEF /* ContactsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsService.swift; sourceTree = "<group>"; };
 		722DFB2923637A04005E9BAE /* DetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
 		722DFB2B23637A50005E9BAE /* DetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewModel.swift; sourceTree = "<group>"; };
 		722DFB2D23638260005E9BAE /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
@@ -96,6 +98,7 @@
 			children = (
 				72CDE0CF23639B490077E0C1 /* Models */,
 				722DFB30236382C7005E9BAE /* Dependencies.swift */,
+				720F670D2363B523003DDBEF /* ContactsService.swift */,
 				722DFB2D23638260005E9BAE /* APIService.swift */,
 				722DFB3223638614005E9BAE /* Endpoint.swift */,
 			);
@@ -260,6 +263,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				720F670E2363B523003DDBEF /* ContactsService.swift in Sources */,
 				72CDE0D323639B740077E0C1 /* Position.swift in Sources */,
 				727E08322363310E00DACAEC /* Extensions.swift in Sources */,
 				72CDE0CE23638DED0077E0C1 /* Employee.swift in Sources */,

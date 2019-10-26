@@ -41,5 +41,7 @@
 	</array>
 	<key>UIUserInterfaceStyle</key>
 	<string>Light</string>
+	<key>NSContactsUsageDescription</key>
+	<string>You will be able to open work contacts directly from application.</string>
 </dict>
 </plist>
