@@ -1,6 +1,6 @@
 //
 //  DetailsViewModel.swift
-//  Contacts
+//  WorkContacts
 //
 //  Created by @esesmuedgars
 //

@@ -1,20 +1,20 @@
 //
-//  DetailsViewController.swift
-//  Contacts
+//  ContactsViewController.swift
+//  WorkContacts
 //
 //  Created by @esesmuedgars
 //
 
 import UIKit
 
-protocol DetailsViewModelType {
+protocol ContactsViewModelType {
 }
 
-final class DetailsViewController: UIViewController, DetailsViewModelDelegate, UITableViewDataSource, UITableViewDelegate {
+final class ContactsViewController: UIViewController, ContactsViewModelDelegate, UITableViewDataSource, UITableViewDelegate {
 
-    var viewModel: DetailsViewModelType!
+    var viewModel: ContactsViewModelType!
 
-    // MARK: - DetailsViewModelDelegate
+    // MARK: - ContactsViewModelDelegate
 
     // MARK: - UITableViewDataSource
 
@@ -31,3 +31,4 @@ final class DetailsViewController: UIViewController, DetailsViewModelDelegate, U
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     }
 }
+

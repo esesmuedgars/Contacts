@@ -1,6 +1,6 @@
 //
 //  Dependencies.swift
-//  Contacts
+//  WorkContacts
 //
 //  Created by @esesmuedgars
 //
@@ -12,8 +12,10 @@ final class Dependencies {
     static var shared = Dependencies()
 
     let apiService: APIServiceProtocol
+    let contactsService: ContactsServiceProtocol
 
     private init() {
         apiService = APIService()
+        contactsService = ContactsService()
     }
 }
