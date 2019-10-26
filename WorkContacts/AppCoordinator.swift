@@ -19,7 +19,7 @@ private extension Coordinator {
 }
 
 protocol CoordinatorFlowDelegate: AnyObject {
-    func presentDetailsViewController()
+    func pushDetailsViewController()
     func pushContactViewController(for: CNContact)
 }
 
@@ -45,7 +45,9 @@ final class AppCoordinator: Coordinator, CoordinatorFlowDelegate {
         setWindowRoot(viewController: navigationController)
     }
 
-    func presentDetailsViewController() {
+    // MARK: - CoordinatorFlowDelegate
+
+    func pushDetailsViewController() {
         let viewController = storyboard.instantiateViewController(ofType: DetailsViewController.self)
 
         let viewModel = DetailsViewModel()
@@ -54,7 +56,7 @@ final class AppCoordinator: Coordinator, CoordinatorFlowDelegate {
 
         viewController.viewModel = viewModel
 
-        navigationController.present(viewController, animated: true)
+        navigationController.pushViewController(viewController, animated: true)
     }
 
     func pushContactViewController(for contact: CNContact) {

@@ -37,27 +37,6 @@ protocol APIServiceProtocol {
 
 final class APIService: APIServiceProtocol {
 
-    func fetchEmployeeList(completionHandler complete: @escaping EmployeeListCompletionBlock) {
-        fetchEmployees(location: .tartu) { [unowned self] result in
-            switch result {
-            case .success(let tartuEmployees):
-                self.fetchEmployees(location: .tallinn) { result in
-                    switch result {
-                    case .success(let tallinnEmployees):
-                        let employees = tartuEmployees.union(tallinnEmployees)
-                        complete(.success(employees))
-
-                    case .failure(let error):
-                        complete(.failure(error))
-                    }
-                }
-
-            case .failure(let error):
-                complete(.failure(error))
-            }
-        }
-    }
-
     private func fetchEmployees(location: Base, completionHandler complete: @escaping EmployeeListCompletionBlock) {
         guard let url = Endpoint.employees.url(base: location) else {
             complete(.failure(.invalidURL))
@@ -82,5 +61,28 @@ final class APIService: APIServiceProtocol {
                 complete(.failure(.unableToParseDataWith(error: error)))
             }
         }.resume()
+    }
+
+    // MARK: - APIServiceProtocol
+
+    func fetchEmployeeList(completionHandler complete: @escaping EmployeeListCompletionBlock) {
+        fetchEmployees(location: .tartu) { [unowned self] result in
+            switch result {
+            case .success(let tartuEmployees):
+                self.fetchEmployees(location: .tallinn) { result in
+                    switch result {
+                    case .success(let tallinnEmployees):
+                        let employees = tartuEmployees.union(tallinnEmployees)
+                        complete(.success(employees))
+
+                    case .failure(let error):
+                        complete(.failure(error))
+                    }
+                }
+
+            case .failure(let error):
+                complete(.failure(error))
+            }
+        }
     }
 }
