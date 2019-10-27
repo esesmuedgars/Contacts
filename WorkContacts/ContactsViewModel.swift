@@ -30,6 +30,8 @@ final class ContactsViewModel: ContactsViewModelType {
     }
 
     let title = "Employees"
+    let errorTitle = "Oops! Something went wrong!"
+    let errorMessage = "An error ocurred fetching employees or contacts. Please try again later."
     let cancelTitle = "Cancel"
     let retryTitle = "Retry"
 

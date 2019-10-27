@@ -10,6 +10,8 @@ import ContactsUI
 
 protocol ContactsViewModelType {
     var title: String { get }
+    var errorTitle: String { get }
+    var errorMessage: String { get }
     var cancelTitle: String { get }
     var retryTitle: String { get }
     var groups: [Group] { get }
@@ -45,8 +47,8 @@ final class ContactsViewController: UIViewController, ContactsViewModelDelegate,
     }
 
     func viewModelDidFail(withServiceError error: ServiceError) {
-        let alertController = UIAlertController(title: nil,
-                                                message: error.description,
+        let alertController = UIAlertController(title: viewModel.errorTitle,
+                                                message: viewModel.errorMessage,
                                                 preferredStyle: .alert)
 
         let cancel = UIAlertAction(title: viewModel.cancelTitle, style: .cancel, handler: nil)
