@@ -24,25 +24,40 @@ protocol ContactsViewModelType {
 
 final class ContactsViewController: UIViewController, ContactsViewModelDelegate, EmployeeCellDelegate, UITableViewDataSource, UITableViewDelegate {
 
-    @IBOutlet private var tableView: UITableView!
+    @IBOutlet private var tableView: UITableView! {
+        didSet {
+            tableView.refreshControl = refreshControl
+            tableView.tableFooterView = UIView()
+        }
+    }
 
     var viewModel: ContactsViewModelType!
+
+    private let refreshControl = UIRefreshControl()
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         title = viewModel.title
+
+        refreshControl.addTarget(self, action: #selector(fetchEmployeeList), for: .valueChanged)
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
+        fetchEmployeeList()
+    }
+
+    @objc
+    private func fetchEmployeeList() {
         viewModel.fetchEmployeeList()
     }
 
     // MARK: - ContactsViewModelDelegate
 
     func viewModelDidFetchGroups() {
+        refreshControl.endRefreshing()
         tableView.reloadData()
     }
 
@@ -53,7 +68,7 @@ final class ContactsViewController: UIViewController, ContactsViewModelDelegate,
 
         let cancel = UIAlertAction(title: viewModel.cancelTitle, style: .cancel, handler: nil)
         let retry = UIAlertAction(title: viewModel.retryTitle, style: .default) { [unowned self] _ in
-            self.viewModel.fetchEmployeeList()
+            self.fetchEmployeeList()
         }
 
         alertController.addActions(cancel, retry)
