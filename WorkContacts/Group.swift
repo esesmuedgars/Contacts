@@ -12,7 +12,7 @@ struct Group {
     var employees: [Group.Employee]
 
     struct Employee {
-        var contact: CNContact?
+        let contact: CNContact?
         let firstName: String
         let lastName: String
         let details: Details

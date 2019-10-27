@@ -45,34 +45,41 @@ final class ContactsViewModel: ContactsViewModelType {
 
             switch result {
             case .success(let employees):
-                // Group employees by position
-                var grouped = [Position: [Employee]]()
-                employees.forEach {
-                    grouped[$0.position, default: []].append($0)
-                }
-
-                // Initialize `Group` class for UI
-                let groups = grouped.map { (position, employees) -> Group in
-                    let employees = employees.map {
-                        Group.Employee(firstName: $0.firstName,
-                                       lastName: $0.lastName,
-                                       details: $0.details,
-                                       projects: Array($0.projects))
-                    }
-
-                    return Group(position: position, employees: employees)
-                }
-
-                // Sort groups alphabetically and employees by last name
-                let sortedGroups = groups.sorted { $0.position < $1.position }
-                for var group in sortedGroups {
-                    group.employees.sort { $0.lastName < $1.lastName }
-                }
-
-                self.compareEmployeesAgainstContact(groups: sortedGroups) { result in
+                self.contactsService.fetchContactList { result in
                     switch result {
-                    case .success(let groups):
-                        self.groups = groups
+                    case .success(let contacts):
+                        // Group employees by position
+                        var grouped = [Position: [Employee]]()
+                        employees.forEach {
+                            grouped[$0.position, default: []].append($0)
+                        }
+
+                        // Initialize `Group` class for UI
+                        let groups = grouped.map { (position, employees) -> Group in
+                            let employees = employees.map { employee -> Group.Employee in
+                                // Check if employee is contact
+                                let contact = contacts.first { contact in
+                                    contact.givenName.lowercased() == employee.firstName.lowercased() &&
+                                    contact.familyName.lowercased() == employee.lastName.lowercased()
+                                }
+
+                                return Group.Employee(contact: contact,
+                                                      firstName: employee.firstName,
+                                                      lastName: employee.lastName,
+                                                      details: employee.details,
+                                                      projects: Array(employee.projects))
+                            }
+
+                            return Group(position: position, employees: employees)
+                        }
+
+                        // Sort groups alphabetically and employees by last name
+                        let sortedGroups = groups.sorted { $0.position < $1.position }
+                        for var group in sortedGroups {
+                            group.employees.sort { $0.lastName < $1.lastName }
+                        }
+
+                        self.groups = sortedGroups
 
                     case .failure(let error):
                         // TODO: call delegate with error
@@ -83,34 +90,6 @@ final class ContactsViewModel: ContactsViewModelType {
             case .failure(let error):
                 // TODO: call delegate with error
                 fatalError(error.description)
-            }
-        }
-    }
-
-    private func compareEmployeesAgainstContact(groups: [Group], completionHandler complete: @escaping (Result<[Group], ContactsServiceError>) -> Void) {
-        contactsService.fetchContactList { result in
-            switch result {
-            case .success(let contacts):
-                let groups = groups.map { group -> Group in
-                    var mutableGroup = group
-                    mutableGroup.employees = mutableGroup.employees.map { employee -> Group.Employee in
-
-                        var mutableEmployee = employee
-                        mutableEmployee.contact = contacts.first { contact in
-                            contact.givenName == employee.firstName &&
-                                contact.familyName == employee.lastName
-                        }
-
-                        return mutableEmployee
-                    }
-
-                    return mutableGroup
-                }
-
-                complete(.success(groups))
-
-            case .failure(let error):
-                complete(.failure(error))
             }
         }
     }
