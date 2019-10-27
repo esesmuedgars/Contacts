@@ -19,7 +19,7 @@ private extension Coordinator {
 }
 
 protocol CoordinatorFlowDelegate: AnyObject {
-    func pushDetailsViewController()
+    func pushDetailsViewController(for: Group.Employee)
     func pushContactViewController(for: CNContact)
 }
 
@@ -41,13 +41,17 @@ final class AppCoordinator: Coordinator, CoordinatorFlowDelegate {
 
         viewController.viewModel = viewModel
 
-        navigationController = UINavigationController(rootViewController: viewController)
+        let navigationController = UINavigationController(rootViewController: viewController)
+        navigationController.navigationBar.prefersLargeTitles = true
+
+        self.navigationController = navigationController
+
         setWindowRoot(viewController: navigationController)
     }
 
     // MARK: - CoordinatorFlowDelegate
 
-    func pushDetailsViewController() {
+    func pushDetailsViewController(for employee: Group.Employee) {
         let viewController = storyboard.instantiateViewController(ofType: DetailsViewController.self)
 
         let viewModel = DetailsViewModel()
@@ -55,6 +59,7 @@ final class AppCoordinator: Coordinator, CoordinatorFlowDelegate {
         viewModel.flowDelegate = self
 
         viewController.viewModel = viewModel
+        // TODO: Pass `employee` to `DetailsViewModel`
 
         navigationController.pushViewController(viewController, animated: true)
     }

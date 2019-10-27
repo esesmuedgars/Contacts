@@ -14,6 +14,9 @@
 		722DFB2E23638260005E9BAE /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 722DFB2D23638260005E9BAE /* APIService.swift */; };
 		722DFB31236382C7005E9BAE /* Dependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 722DFB30236382C7005E9BAE /* Dependencies.swift */; };
 		722DFB3323638614005E9BAE /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 722DFB3223638614005E9BAE /* Endpoint.swift */; };
+		72366D1F2365F64300710603 /* EmployeeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72366D1E2365F64300710603 /* EmployeeCell.swift */; };
+		72366D232366135200710603 /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72366D222366135200710603 /* Group.swift */; };
+		72366D272366160100710603 /* ServiceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72366D262366160100710603 /* ServiceError.swift */; };
 		7276AECB236329B1000D5211 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7276AECA236329B1000D5211 /* AppDelegate.swift */; };
 		7276AECF236329B1000D5211 /* ContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7276AECE236329B1000D5211 /* ContactsViewController.swift */; };
 		7276AED2236329B1000D5211 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7276AED0236329B1000D5211 /* Main.storyboard */; };
@@ -49,6 +52,9 @@
 		722DFB2D23638260005E9BAE /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
 		722DFB30236382C7005E9BAE /* Dependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dependencies.swift; sourceTree = "<group>"; };
 		722DFB3223638614005E9BAE /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
+		72366D1E2365F64300710603 /* EmployeeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeeCell.swift; sourceTree = "<group>"; };
+		72366D222366135200710603 /* Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
+		72366D262366160100710603 /* ServiceError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceError.swift; sourceTree = "<group>"; };
 		7276AEC7236329B1000D5211 /* WorkContacts.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WorkContacts.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7276AECA236329B1000D5211 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7276AECE236329B1000D5211 /* ContactsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsViewController.swift; sourceTree = "<group>"; };
@@ -98,6 +104,7 @@
 			children = (
 				72CDE0CF23639B490077E0C1 /* Models */,
 				722DFB30236382C7005E9BAE /* Dependencies.swift */,
+				72366D262366160100710603 /* ServiceError.swift */,
 				720F670D2363B523003DDBEF /* ContactsService.swift */,
 				722DFB2D23638260005E9BAE /* APIService.swift */,
 				722DFB3223638614005E9BAE /* Endpoint.swift */,
@@ -131,6 +138,8 @@
 				722DFB2F2363826F005E9BAE /* Dependencies */,
 				7276AECE236329B1000D5211 /* ContactsViewController.swift */,
 				727E0833236334DA00DACAEC /* ContactsViewModel.swift */,
+				72366D222366135200710603 /* Group.swift */,
+				72366D1E2365F64300710603 /* EmployeeCell.swift */,
 				722DFB2923637A04005E9BAE /* DetailsViewController.swift */,
 				722DFB2B23637A50005E9BAE /* DetailsViewModel.swift */,
 				727E08312363310E00DACAEC /* Extensions.swift */,
@@ -272,10 +281,13 @@
 				722DFB2C23637A50005E9BAE /* DetailsViewModel.swift in Sources */,
 				7276AED5236329B1000D5211 /* WorkContacts.xcdatamodeld in Sources */,
 				722DFB2A23637A04005E9BAE /* DetailsViewController.swift in Sources */,
+				72366D232366135200710603 /* Group.swift in Sources */,
 				7276AECF236329B1000D5211 /* ContactsViewController.swift in Sources */,
 				72CDE0D123639B590077E0C1 /* Details.swift in Sources */,
+				72366D272366160100710603 /* ServiceError.swift in Sources */,
 				722DFB2E23638260005E9BAE /* APIService.swift in Sources */,
 				722DFB31236382C7005E9BAE /* Dependencies.swift in Sources */,
+				72366D1F2365F64300710603 /* EmployeeCell.swift in Sources */,
 				72CDE0D523639D5A0077E0C1 /* EmployeeList.swift in Sources */,
 				722DFB3323638614005E9BAE /* Endpoint.swift in Sources */,
 				7276AECB236329B1000D5211 /* AppDelegate.swift in Sources */,

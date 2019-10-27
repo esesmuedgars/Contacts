@@ -6,23 +6,30 @@
 //
 
 enum Position: String, Decodable, Hashable {
-    case ios = "IOS"
     case android = "ANDROID"
-    case pm = "PM"
-    case web = "WEB"
-    case tester = "TESTER"
-    case sales = "SALES"
+    case ios = "IOS"
     case other = "OTHER"
+    case pm = "PM"
+    case sales = "SALES"
+    case tester = "TESTER"
+    case web = "WEB"
+
 
     var fullTitle: String {
         switch self {
-        case .ios: return "iOS developer"
-        case .android: return "Android developer"
-        case .pm: return "Project manager"
-        case .web: return "Front-end developer"
-        case .tester: return "Quality assurance specialist"
-        case .sales: return "Sales manager"
-        case .other: return "Employee"
+        case .android: return "Android developers"
+        case .ios: return "iOS developers"
+        case .other: return "Other positions"
+        case .pm: return "Project managers"
+        case .sales: return "Sales managers"
+        case .tester: return "Testers"
+        case .web: return "Web developers"
         }
+    }
+}
+
+extension Position {
+    static func <(lhs: Position, rhs: Position) -> Bool {
+        return lhs.rawValue < rhs.rawValue
     }
 }

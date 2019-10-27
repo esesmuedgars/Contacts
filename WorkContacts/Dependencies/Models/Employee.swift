@@ -8,13 +8,9 @@
 struct Employee: Decodable, Hashable {
     let firstName: String
     let lastName: String
-    private let position: Position
+    let position: Position
     let details: Details
     let projects: Set<String>
-
-    var positionTitle: String {
-        return position.fullTitle
-    }
 
     private enum CodingKeys: String, CodingKey {
         case firstName = "fname"
