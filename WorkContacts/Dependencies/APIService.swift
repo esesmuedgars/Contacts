@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum APIServiceError: Error {
+enum APIServiceError: ServiceError {
     case invalidURL
     case emptyDataOrError
     case unexpectedStatusCode(statusCode: Int)

@@ -16,13 +16,13 @@ enum Position: String, Decodable, Hashable {
 
     var fullTitle: String {
         switch self {
-        case .ios: return "iOS developer"
-        case .android: return "Android developer"
-        case .pm: return "Project manager"
-        case .web: return "Front-end developer"
-        case .tester: return "Quality assurance specialist"
-        case .sales: return "Sales manager"
-        case .other: return "Employee"
+        case .ios: return "iOS developers"
+        case .android: return "Android developers"
+        case .pm: return "Project managers"
+        case .web: return "Front-end developers"
+        case .tester: return "Quality assurance specialists"
+        case .sales: return "Sales managers"
+        case .other: return "Other positions"
         }
     }
 }

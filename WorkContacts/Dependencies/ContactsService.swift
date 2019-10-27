@@ -8,7 +8,7 @@
 import Contacts
 import ContactsUI
 
-enum ContactsServiceError: Error {
+enum ContactsServiceError: ServiceError {
     case permissionDeniedOrRestricted
     case failedToFetchContactContainers(error: Error)
     case failedToFetchUnifiedContacts(error: Error)
