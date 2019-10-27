@@ -14,8 +14,8 @@ protocol EmployeeCellDelegate: AnyObject {
 
 class EmployeeCell: UITableViewCell {
 
-    @IBOutlet private var firstNameLabel: UILabel!
     @IBOutlet private var lastNameLabel: UILabel!
+    @IBOutlet private var firstNameLabel: UILabel!
     @IBOutlet private var contactButton: UIButton!
 
     @IBAction private func touchUpInside(_ sender: UIButton) {
@@ -28,7 +28,7 @@ class EmployeeCell: UITableViewCell {
 
     private var contact: CNContact?
 
-    func configure(firstName: String, lastName: String, contact: CNContact?) {
+    func configure(lastName: String, firstName: String, contact: CNContact?) {
         firstNameLabel.text = firstName
         lastNameLabel.text = lastName
 

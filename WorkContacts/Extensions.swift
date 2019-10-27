@@ -33,3 +33,11 @@ extension UIColor {
         return #colorLiteral(red: 1, green: 0.8156862745, blue: 0, alpha: 1)
     }
 }
+
+extension UIAlertController {
+    func addActions(_ actions: UIAlertAction...) {
+        for action in actions {
+            addAction(action)
+        }
+    }
+}

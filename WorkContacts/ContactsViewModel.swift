@@ -10,6 +10,7 @@ import Contacts
 
 protocol ContactsViewModelDelegate: AnyObject {
     func viewModelDidFetchGroups()
+    func viewModelDidFail(withServiceError error: ServiceError)
 }
 
 final class ContactsViewModel: ContactsViewModelType {
@@ -29,6 +30,8 @@ final class ContactsViewModel: ContactsViewModelType {
     }
 
     let title = "Employees"
+    let cancelTitle = "Cancel"
+    let retryTitle = "Retry"
 
     init(apiService: APIServiceProtocol = Dependencies.shared.apiService,
          contactsService: ContactsServiceProtocol = Dependencies.shared.contactsService) {
@@ -37,12 +40,7 @@ final class ContactsViewModel: ContactsViewModelType {
     }
 
     func fetchEmployeeList() {
-        apiService.fetchEmployeeList { [weak self] result in
-            guard let self = self else {
-                // TODO: Call delegate with error
-                return
-            }
-
+        apiService.fetchEmployeeList { [unowned self] result in
             switch result {
             case .success(let employees):
                 self.contactsService.fetchContactList { result in
@@ -57,10 +55,10 @@ final class ContactsViewModel: ContactsViewModelType {
                         // Initialize `Group` class for UI
                         let groups = grouped.map { (position, employees) -> Group in
                             let employees = employees.map { employee -> Group.Employee in
-                                // Check if employee is contact
+                                // Check if employee is saved as contact
                                 let contact = contacts.first { contact in
                                     contact.givenName.lowercased() == employee.firstName.lowercased() &&
-                                    contact.familyName.lowercased() == employee.lastName.lowercased()
+                                        contact.familyName.lowercased() == employee.lastName.lowercased()
                                 }
 
                                 return Group.Employee(contact: contact,
@@ -70,26 +68,28 @@ final class ContactsViewModel: ContactsViewModelType {
                                                       projects: Array(employee.projects))
                             }
 
-                            return Group(position: position, employees: employees)
+                            // Sort employees by last name
+                            let sortedEmployees = employees.sorted { $0.lastName < $1.lastName }
+
+                            return Group(position: position, employees: sortedEmployees)
                         }
 
-                        // Sort groups alphabetically and employees by last name
+                        // Sort groups alphabetically
                         let sortedGroups = groups.sorted { $0.position < $1.position }
-                        for var group in sortedGroups {
-                            group.employees.sort { $0.lastName < $1.lastName }
-                        }
 
                         self.groups = sortedGroups
 
                     case .failure(let error):
-                        // TODO: call delegate with error
-                        fatalError(error.description)
+                        DispatchQueue.main.async {
+                            self.delegate?.viewModelDidFail(withServiceError: error)
+                        }
                     }
                 }
 
             case .failure(let error):
-                // TODO: call delegate with error
-                fatalError(error.description)
+                DispatchQueue.main.async {
+                    self.delegate?.viewModelDidFail(withServiceError: error)
+                }
             }
         }
     }

@@ -63,8 +63,8 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="contactButton" destination="RM7-ux-HmN" id="1DI-he-zZA"/>
-                                            <outlet property="firstNameLabel" destination="ym5-Xm-SZs" id="DnV-o4-BRW"/>
-                                            <outlet property="lastNameLabel" destination="JwK-4p-sEh" id="qhM-dX-dlh"/>
+                                            <outlet property="firstNameLabel" destination="JwK-4p-sEh" id="iod-kL-LI5"/>
+                                            <outlet property="lastNameLabel" destination="ym5-Xm-SZs" id="7tI-Xi-FqU"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>

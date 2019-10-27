@@ -10,6 +10,8 @@ import ContactsUI
 
 protocol ContactsViewModelType {
     var title: String { get }
+    var cancelTitle: String { get }
+    var retryTitle: String { get }
     var groups: [Group] { get }
 
     func fetchEmployeeList()
@@ -28,7 +30,11 @@ final class ContactsViewController: UIViewController, ContactsViewModelDelegate,
         super.viewDidLoad()
 
         title = viewModel.title
-        
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
         viewModel.fetchEmployeeList()
     }
 
@@ -36,6 +42,21 @@ final class ContactsViewController: UIViewController, ContactsViewModelDelegate,
 
     func viewModelDidFetchGroups() {
         tableView.reloadData()
+    }
+
+    func viewModelDidFail(withServiceError error: ServiceError) {
+        let alertController = UIAlertController(title: nil,
+                                                message: error.description,
+                                                preferredStyle: .alert)
+
+        let cancel = UIAlertAction(title: viewModel.cancelTitle, style: .cancel, handler: nil)
+        let retry = UIAlertAction(title: viewModel.retryTitle, style: .default) { [unowned self] _ in
+            self.viewModel.fetchEmployeeList()
+        }
+
+        alertController.addActions(cancel, retry)
+
+        present(alertController, animated: true)
     }
 
     // MARK: - EmployeeCellDelegate
@@ -63,8 +84,8 @@ final class ContactsViewController: UIViewController, ContactsViewModelDelegate,
         cell.delegate = self
 
         let employee = viewModel.groups[indexPath.section].employees[indexPath.row]
-        cell.configure(firstName: employee.firstName,
-                       lastName: employee.lastName,
+        cell.configure(lastName: employee.lastName,
+                       firstName: employee.firstName,
                        contact: employee.contact)
 
         return cell
