@@ -10,19 +10,22 @@ import ContactsUI
 
 protocol ContactsViewModelType {
     var title: String { get }
+    var placeholder: String { get }
     var errorTitle: String { get }
     var errorMessage: String { get }
     var cancelTitle: String { get }
     var retryTitle: String { get }
     var groups: [Group] { get }
+    var filteredGroups: [Group] { get }
 
     func fetchEmployeeList()
+    func updateSearchResults(_: String)
 
     func pushDetailsViewController(employee: Group.Employee)
     func pushContactViewController(contact: CNContact)
 }
 
-final class ContactsViewController: UIViewController, ContactsViewModelDelegate, EmployeeCellDelegate, UITableViewDataSource, UITableViewDelegate {
+final class ContactsViewController: UIViewController, ContactsViewModelDelegate, EmployeeCellDelegate, UITableViewDataSource, UITableViewDelegate, UISearchResultsUpdating {
 
     @IBOutlet private var tableView: UITableView! {
         didSet {
@@ -34,19 +37,52 @@ final class ContactsViewController: UIViewController, ContactsViewModelDelegate,
     var viewModel: ContactsViewModelType!
 
     private let refreshControl = UIRefreshControl()
+    private var shouldFetchInitialEmployeeList = true
+
+    private lazy var searchController: UISearchController = {
+        let controller = UISearchController(searchResultsController: nil)
+        controller.searchResultsUpdater = self
+        controller.obscuresBackgroundDuringPresentation = false
+
+        return controller
+    }()
+
+    private var isSearching: Bool {
+        guard let string = searchController.searchBar.text else {
+            return true
+        }
+
+        return searchController.isActive && !string.isEmpty
+    }
+
+    private var groups: [Group] {
+        return isSearching ? viewModel.filteredGroups : viewModel.groups
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = viewModel.title
+        navigationItem.searchController = searchController
 
         refreshControl.addTarget(self, action: #selector(fetchEmployeeList), for: .valueChanged)
+
+        bindUI()
+    }
+
+    private func bindUI() {
+        title = viewModel.title
+        
+        searchController.searchBar.placeholder = viewModel.placeholder
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
-        fetchEmployeeList()
+        if shouldFetchInitialEmployeeList {
+            fetchEmployeeList()
+
+            shouldFetchInitialEmployeeList = false
+        }
     }
 
     @objc
@@ -76,6 +112,10 @@ final class ContactsViewController: UIViewController, ContactsViewModelDelegate,
         present(alertController, animated: true)
     }
 
+    func viewModelDidUpdateSearchResults() {
+        tableView.reloadData()
+    }
+
     // MARK: - EmployeeCellDelegate
 
     func employeeCellOpenContactInfo(contact: CNContact) {
@@ -85,22 +125,22 @@ final class ContactsViewController: UIViewController, ContactsViewModelDelegate,
     // MARK: - UITableViewDataSource
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        return viewModel.groups.count
+        return groups.count
     }
 
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return viewModel.groups[section].position.fullTitle
+        return groups[section].position.fullTitle
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.groups[section].employees.count
+        return groups[section].employees.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(ofType: EmployeeCell.self, for: indexPath)
         cell.delegate = self
 
-        let employee = viewModel.groups[indexPath.section].employees[indexPath.row]
+        let employee = groups[indexPath.section].employees[indexPath.row]
         cell.configure(lastName: employee.lastName,
                        firstName: employee.firstName,
                        contact: employee.contact)
@@ -113,8 +153,16 @@ final class ContactsViewController: UIViewController, ContactsViewModelDelegate,
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
 
-        let employee = viewModel.groups[indexPath.section].employees[indexPath.row]
+        let employee = groups[indexPath.section].employees[indexPath.row]
         viewModel.pushDetailsViewController(employee: employee)
+    }
+
+    // MARK: - UISearchResultsUpdating
+
+    public func updateSearchResults(for searchController: UISearchController) {
+        if let string = searchController.searchBar.text {
+            viewModel.updateSearchResults(string)
+        }
     }
 }
 

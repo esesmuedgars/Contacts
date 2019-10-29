@@ -25,7 +25,7 @@ extension UITableView {
 
         headerView.translatesAutoresizingMaskIntoConstraints = false
 
-        let width = headerView.bounds.size.width
+        let width = headerView.frame.width
         let temporaryWidthConstraint = headerView.widthAnchor.constraint(equalToConstant: width)
 
         headerView.addConstraint(temporaryWidthConstraint)
