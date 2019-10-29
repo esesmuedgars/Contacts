@@ -11,6 +11,7 @@ import Contacts
 protocol ContactsViewModelDelegate: AnyObject {
     func viewModelDidFetchGroups()
     func viewModelDidFail(withServiceError error: ServiceError)
+    func viewModelDidUpdateSearchResults()
 }
 
 final class ContactsViewModel: ContactsViewModelType {
@@ -29,7 +30,16 @@ final class ContactsViewModel: ContactsViewModelType {
         }
     }
 
+    var filteredGroups = [Group]() {
+        didSet {
+            DispatchQueue.main.async {
+                self.delegate?.viewModelDidUpdateSearchResults()
+            }
+        }
+    }
+
     let title = "Employees"
+    let placeholder = "Search"
     let errorTitle = "Oops! Something went wrong!"
     let errorMessage = "An error ocurred fetching employees or contacts. Please try again later."
     let cancelTitle = "Cancel"
@@ -95,6 +105,24 @@ final class ContactsViewModel: ContactsViewModelType {
                 }
             }
         }
+    }
+
+    func updateSearchResults(_ string: String) {
+        let string = string.lowercased()
+
+        let filteredGroups = groups.compactMap { group -> Group? in
+            // Filter employees by first name, last name, email, projects or position
+            let filteredEmployees = group.employees.filter { employee in
+                return employee.firstName.lowercased().contains(string) || employee.lastName.lowercased().contains(string) || employee.position.fullTitle.lowercased().contains(string) ||
+                    employee.details.email.lowercased().contains(string) ||
+                    employee.projects.contains(where: { $0.lowercased().contains(string) })
+            }
+
+            // Remove group if there are no employees
+            return filteredEmployees.isEmpty ? nil : Group(position: group.position, employees: filteredEmployees)
+        }
+
+        self.filteredGroups = filteredGroups
     }
 
     func pushDetailsViewController(employee: Group.Employee) {
