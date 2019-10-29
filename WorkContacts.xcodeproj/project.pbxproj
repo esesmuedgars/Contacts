@@ -30,6 +30,7 @@
 		72CDE0D123639B590077E0C1 /* Details.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72CDE0D023639B590077E0C1 /* Details.swift */; };
 		72CDE0D323639B740077E0C1 /* Position.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72CDE0D223639B740077E0C1 /* Position.swift */; };
 		72CDE0D523639D5A0077E0C1 /* EmployeeList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72CDE0D423639D5A0077E0C1 /* EmployeeList.swift */; };
+		72E1394823677680009049CB /* ProjectCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72E1394723677680009049CB /* ProjectCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,6 +71,7 @@
 		72CDE0D023639B590077E0C1 /* Details.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Details.swift; sourceTree = "<group>"; };
 		72CDE0D223639B740077E0C1 /* Position.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Position.swift; sourceTree = "<group>"; };
 		72CDE0D423639D5A0077E0C1 /* EmployeeList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeeList.swift; sourceTree = "<group>"; };
+		72E1394723677680009049CB /* ProjectCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -142,6 +144,7 @@
 				72366D1E2365F64300710603 /* EmployeeCell.swift */,
 				722DFB2923637A04005E9BAE /* DetailsViewController.swift */,
 				722DFB2B23637A50005E9BAE /* DetailsViewModel.swift */,
+				72E1394723677680009049CB /* ProjectCell.swift */,
 				727E08312363310E00DACAEC /* Extensions.swift */,
 				7276AED0236329B1000D5211 /* Main.storyboard */,
 				7276AED6236329B3000D5211 /* Assets.xcassets */,
@@ -275,6 +278,7 @@
 				720F670E2363B523003DDBEF /* ContactsService.swift in Sources */,
 				72CDE0D323639B740077E0C1 /* Position.swift in Sources */,
 				727E08322363310E00DACAEC /* Extensions.swift in Sources */,
+				72E1394823677680009049CB /* ProjectCell.swift in Sources */,
 				72CDE0CE23638DED0077E0C1 /* Employee.swift in Sources */,
 				727E0834236334DA00DACAEC /* ContactsViewModel.swift in Sources */,
 				727E083023632DC200DACAEC /* AppCoordinator.swift in Sources */,

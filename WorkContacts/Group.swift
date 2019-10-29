@@ -15,6 +15,7 @@ struct Group {
         let contact: CNContact?
         let firstName: String
         let lastName: String
+        let position: Position
         let details: Details
         let projects: [String]
     }

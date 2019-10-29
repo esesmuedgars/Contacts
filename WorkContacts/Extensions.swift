@@ -19,18 +19,27 @@ extension UITableView {
     func dequeueReusableCell<Cell: UITableViewCell>(ofType type: Cell.Type, for indexPath: IndexPath) -> Cell {
         return dequeueReusableCell(withIdentifier: String(describing: type), for: indexPath) as! Cell
     }
-}
 
-extension UIColor {
+    func layoutTableHeaderView() {
+        guard let headerView = tableHeaderView else { return }
 
-    /// #F6F5F8
-    static var mooncascadeLightGray: UIColor {
-        return #colorLiteral(red: 0.9647058824, green: 0.9607843137, blue: 0.9725490196, alpha: 1)
-    }
+        headerView.translatesAutoresizingMaskIntoConstraints = false
 
-    /// #FFD000
-    static var mooncascadeYellow: UIColor {
-        return #colorLiteral(red: 1, green: 0.8156862745, blue: 0, alpha: 1)
+        let width = headerView.bounds.size.width
+        let temporaryWidthConstraint = headerView.widthAnchor.constraint(equalToConstant: width)
+
+        headerView.addConstraint(temporaryWidthConstraint)
+
+        let height = headerView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
+        var frame = headerView.frame
+
+        frame.size.height = height
+        headerView.frame = frame
+
+        headerView.removeConstraint(temporaryWidthConstraint)
+        headerView.translatesAutoresizingMaskIntoConstraints = true
+
+        tableHeaderView = headerView
     }
 }
 
@@ -39,5 +48,11 @@ extension UIAlertController {
         for action in actions {
             addAction(action)
         }
+    }
+}
+
+extension UIBarButtonItem {
+    convenience init(imageName named: String, style: UIBarButtonItem.Style, target: Any?, selector action: Selector?) {
+        self.init(image: UIImage(named: named), style: .plain, target: target, action: action)
     }
 }

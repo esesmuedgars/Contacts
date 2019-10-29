@@ -41,11 +41,7 @@ final class AppCoordinator: Coordinator, CoordinatorFlowDelegate {
 
         viewController.viewModel = viewModel
 
-        let navigationController = UINavigationController(rootViewController: viewController)
-        navigationController.navigationBar.prefersLargeTitles = true
-
-        self.navigationController = navigationController
-
+        navigationController = UINavigationController(rootViewController: viewController)
         setWindowRoot(viewController: navigationController)
     }
 
@@ -54,12 +50,10 @@ final class AppCoordinator: Coordinator, CoordinatorFlowDelegate {
     func pushDetailsViewController(for employee: Group.Employee) {
         let viewController = storyboard.instantiateViewController(ofType: DetailsViewController.self)
 
-        let viewModel = DetailsViewModel()
-        viewModel.delegate = viewController
+        let viewModel = DetailsViewModel(employee: employee)
         viewModel.flowDelegate = self
 
         viewController.viewModel = viewModel
-        // TODO: Pass `employee` to `DetailsViewModel`
 
         navigationController.pushViewController(viewController, animated: true)
     }
