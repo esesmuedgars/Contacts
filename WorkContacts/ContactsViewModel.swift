@@ -66,6 +66,7 @@ final class ContactsViewModel: ContactsViewModelType {
                                 return Group.Employee(contact: contact,
                                                       firstName: employee.firstName,
                                                       lastName: employee.lastName,
+                                                      position: employee.position,
                                                       details: employee.details,
                                                       projects: Array(employee.projects))
                             }

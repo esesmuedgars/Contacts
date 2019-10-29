@@ -14,7 +14,6 @@ enum Position: String, Decodable, Hashable {
     case tester = "TESTER"
     case web = "WEB"
 
-
     var fullTitle: String {
         switch self {
         case .android: return "Android developers"
@@ -24,6 +23,18 @@ enum Position: String, Decodable, Hashable {
         case .sales: return "Sales managers"
         case .tester: return "Testers"
         case .web: return "Web developers"
+        }
+    }
+
+    var detailsTitle: String {
+        switch self {
+        case .android: return "Android developer"
+        case .ios: return "iOS developer"
+        case .other: return "Unspecified"
+        case .pm: return "Project manager"
+        case .sales: return "Sales manager"
+        case .tester: return "Quality assurance specialist"
+        case .web: return "Front-end developer"
         }
     }
 }
