@@ -1,7 +1,8 @@
 # Work Contacts
 
 #### Technical assignment for iOS developer role at [Mooncascade](https://mooncascade.com/).
-[Technical requirement document](https://github.com/esesmuedgars/WorkContacts/blob/master/RequirementsDocument.md)
+- [Technical requirements document](https://github.com/esesmuedgars/WorkContacts/blob/master/RequirementsDocument.md);
+- [Technical assignment feedback](https://github.com/esesmuedgars/WorkContacts/blob/master/AssignmentFeedback.md).
 
 ## Installation
 
