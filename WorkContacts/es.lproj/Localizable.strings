@@ -1,0 +1,31 @@
+//
+//  Localizable.strings
+//  WorkContacts
+//
+//  Created by @esesmuedgars
+//
+
+"contacts.navigation.title" = "Empleados";
+"contacts.position.title.android" = "Desarrolladores de android";
+"contacts.position.title.ios" = "Desarrolladores de iOS";
+"contacts.position.title.other" = "Otros títulos de trabajo";
+"contacts.position.title.pm" = "Gerentes de proyecto";
+"contacts.position.title.sales" = "Gerentes de ventas";
+"contacts.position.title.tester" = "Probadores";
+"contacts.position.title.web" = "Desarrolladores web";
+"contacts.position.details.title.android" = "Desarrollador de android";
+"contacts.position.details.title.ios" = "Desarrollador iOS";
+"contacts.position.details.title.other" = "Sin especificar";
+"contacts.position.details.title.pm" = "Gerente de proyecto";
+"contacts.position.details.title.sales" = "Gerente de ventas";
+"contacts.position.details.title.tester" = "Especialista en aseguramiento de calidad";
+"contacts.position.details.title.web" = "Desarrollador front-end";
+"contacts.navigation.search.placeholder" = "Buscar";
+"contacts.error.alert.title" = "¡Uy! ¡Algo salió mal!";
+"contacts.error.alert.message" = "Se produjo un error al buscar empleados o contactos. Por favor, inténtelo de nuevo más tardex.";
+"contacts.error.alert.button.cancel" = "Cancelar";
+"contacts.error.alert.button.retry" = "Procesar de nuevo";
+"details.title.projects" = "Proyectos";
+"details.title.position" = "POSICIÓN";
+"details.title.email" = "CORREO ELECTRÓNICO";
+"details.title.phone_number" = "NÚMERO DE TELÉFONO";

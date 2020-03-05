@@ -1,0 +1,31 @@
+//
+//  Localizable.strings
+//  WorkContacts
+//
+//  Created by @esesmuedgars
+//
+
+"contacts.navigation.title" = "Employees";
+"contacts.position.title.android" = "Android developers";
+"contacts.position.title.ios" = "iOS developers";
+"contacts.position.title.other" = "Other positions";
+"contacts.position.title.pm" = "Project managers";
+"contacts.position.title.sales" = "Sales managers";
+"contacts.position.title.tester" = "Testers";
+"contacts.position.title.web" = "Web developers";
+"contacts.position.details.title.android" = "Android developer";
+"contacts.position.details.title.ios" = "iOS developer";
+"contacts.position.details.title.other" = "Unspecified";
+"contacts.position.details.title.pm" = "Project manager";
+"contacts.position.details.title.sales" = "Sales manager";
+"contacts.position.details.title.tester" = "Quality assurance specialist";
+"contacts.position.details.title.web" = "Front-end developer";
+"contacts.navigation.search.placeholder" = "Search";
+"contacts.error.alert.title" = "Oops! Something went wrong!";
+"contacts.error.alert.message" = "An error ocurred fetching employees or contacts. Please try again later.";
+"contacts.error.alert.button.cancel" = "Cancel";
+"contacts.error.alert.button.retry" = "Retry";
+"details.title.projects" = "Projects";
+"details.title.position" = "POSITION";
+"details.title.email" = "E-MAIL";
+"details.title.phone_number" = "PHONE NUMBER";

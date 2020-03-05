@@ -16,25 +16,25 @@ enum Position: String, Decodable, Hashable {
 
     var fullTitle: String {
         switch self {
-        case .android: return "Android developers"
-        case .ios: return "iOS developers"
-        case .other: return "Other positions"
-        case .pm: return "Project managers"
-        case .sales: return "Sales managers"
-        case .tester: return "Testers"
-        case .web: return "Web developers"
+        case .android: return "contacts.position.title.android".localized()
+        case .ios: return "contacts.position.title.ios".localized()
+        case .other: return "contacts.position.title.other".localized()
+        case .pm: return "contacts.position.title.pm".localized()
+        case .sales: return "contacts.position.title.sales".localized()
+        case .tester: return "contacts.position.title.tester".localized()
+        case .web: return "contacts.position.title.web".localized()
         }
     }
 
     var detailsTitle: String {
         switch self {
-        case .android: return "Android developer"
-        case .ios: return "iOS developer"
-        case .other: return "Unspecified"
-        case .pm: return "Project manager"
-        case .sales: return "Sales manager"
-        case .tester: return "Quality assurance specialist"
-        case .web: return "Front-end developer"
+        case .android: return "contacts.position.details.title.android".localized()
+        case .ios: return "contacts.position.details.title.ios".localized()
+        case .other: return "contacts.position.details.title.other".localized()
+        case .pm: return "contacts.position.details.title.pm".localized()
+        case .sales: return "contacts.position.details.title.sales".localized()
+        case .tester: return "contacts.position.details.title.tester".localized()
+        case .web: return "contacts.position.details.title.web".localized()
         }
     }
 }

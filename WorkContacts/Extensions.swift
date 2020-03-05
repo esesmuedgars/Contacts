@@ -9,6 +9,12 @@ import UIKit
 
 extension String: Error {}
 
+extension String {
+    func localized() -> String {
+        NSLocalizedString(self, comment: self)
+    }
+}
+
 extension UIStoryboard {
     func instantiateViewController<Controller: UIViewController>(ofType type: Controller.Type) -> Controller {
         return instantiateViewController(withIdentifier: String(describing: type)) as! Controller

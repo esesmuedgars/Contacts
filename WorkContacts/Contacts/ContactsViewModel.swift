@@ -38,12 +38,12 @@ final class ContactsViewModel: ContactsViewModelType {
         }
     }
 
-    let title = "Employees"
-    let placeholder = "Search"
-    let errorTitle = "Oops! Something went wrong!"
-    let errorMessage = "An error ocurred fetching employees or contacts. Please try again later."
-    let cancelTitle = "Cancel"
-    let retryTitle = "Retry"
+    let title = "contacts.navigation.title".localized()
+    let placeholder = "contacts.navigation.search.placeholder".localized()
+    let errorTitle = "contacts.error.alert.title".localized()
+    let errorMessage = "contacts.error.alert.message".localized()
+    let cancelTitle = "contacts.error.alert.button.cancel".localized()
+    let retryTitle = "contacts.error.alert.button.retry".localized()
 
     init(apiService: APIServiceProtocol = Dependencies.shared.apiService,
          contactsService: ContactsServiceProtocol = Dependencies.shared.contactsService) {
