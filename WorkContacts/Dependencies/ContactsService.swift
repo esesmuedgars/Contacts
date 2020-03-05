@@ -22,7 +22,7 @@ extension ContactsServiceError {
         case .failedToFetchContactContainers(let error):
             return "Failed to fetch all contact containers, with error: \(error)."
         case .failedToFetchUnifiedContacts(let error):
-            return "Failed to fetch all unified contacts, with error: \(error)"
+            return "Failed to fetch all unified contacts, with error: \(error)."
         }
     }
 }
@@ -38,6 +38,8 @@ final class ContactsService: ContactsServiceProtocol {
     typealias ContactsPermissionCompletionBlock = (Result<Bool, ContactsServiceError>) -> Void
 
     private let contactStore = CNContactStore()
+    private let dispatchQueue = DispatchQueue(label: "ContactsServiceWorkSerialQueue",
+                                              qos: .userInitiated)
 
     private func requestContactsPermissionIfNeeded(completionHandler complete: @escaping ContactsPermissionCompletionBlock) {
         switch CNContactStore.authorizationStatus(for: .contacts) {
@@ -63,7 +65,7 @@ final class ContactsService: ContactsServiceProtocol {
     }
 
     private func fetchContacts(completionHandler complete: @escaping ContactListCompletionBlock) {
-        DispatchQueue.global(qos: .userInteractive).async { [unowned self] in
+        dispatchQueue.async { [unowned self] in
             var containers = [CNContainer]()
             do {
                 containers = try self.contactStore.containers(matching: nil)
