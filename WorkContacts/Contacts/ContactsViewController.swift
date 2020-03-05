@@ -56,7 +56,8 @@ final class ContactsViewController: UIViewController, ContactsViewModelDelegate,
     }
 
     private var groups: [Group] {
-        return isSearching ? viewModel.filteredGroups : viewModel.groups
+        isSearching ? viewModel.filteredGroups : viewModel.groups
+    }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -136,15 +137,15 @@ final class ContactsViewController: UIViewController, ContactsViewModelDelegate,
     // MARK: - UITableViewDataSource
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        return groups.count
+        groups.count
     }
 
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return groups[section].position.fullTitle
+        groups[section].position.fullTitle
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return groups[section].employees.count
+        groups[section].employees.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

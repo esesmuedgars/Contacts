@@ -82,11 +82,11 @@ final class DetailsViewController: UIViewController, UITableViewDataSource {
     // MARK: - UITableViewDataSource
 
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return viewModel.sectionHeaderTitle
+        viewModel.sectionHeaderTitle
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.projects.count
+        viewModel.projects.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

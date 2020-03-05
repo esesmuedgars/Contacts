@@ -41,6 +41,6 @@ enum Position: String, Decodable, Hashable {
 
 extension Position {
     static func <(lhs: Position, rhs: Position) -> Bool {
-        return lhs.rawValue < rhs.rawValue
+        lhs.rawValue < rhs.rawValue
     }
 }
