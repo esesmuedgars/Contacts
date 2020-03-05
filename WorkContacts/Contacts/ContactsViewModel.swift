@@ -55,7 +55,7 @@ final class ContactsViewModel: ContactsViewModelType {
         apiService.fetchEmployeeList { [unowned self] result in
             switch result {
             case .success(let employees):
-                self.contactsService.fetchContactList { result in
+                self.contactsService.fetchContactList { [unowned self] result in
                     switch result {
                     case .success(let contacts):
                         // Group employees by position
@@ -64,32 +64,12 @@ final class ContactsViewModel: ContactsViewModelType {
                             grouped[$0.position, default: []].append($0)
                         }
 
-                        // Initialize `Group` class for UI
-                        let groups = grouped.map { (position, employees) -> Group in
-                            let employees = employees.map { employee -> Group.Employee in
-                                // Check if employee is saved as contact
-                                let contact = contacts.first { contact in
-                                    contact.givenName.lowercased() == employee.firstName.lowercased() &&
-                                        contact.familyName.lowercased() == employee.lastName.lowercased()
-                                }
-
-                                return Group.Employee(contact: contact,
-                                                      firstName: employee.firstName,
-                                                      lastName: employee.lastName,
-                                                      position: employee.position,
-                                                      details: employee.details,
-                                                      projects: Array(employee.projects))
-                            }
-
-                            // Sort employees by last name
-                            let sortedEmployees = employees.sorted { $0.lastName < $1.lastName }
-
-                            return Group(position: position, employees: sortedEmployees)
-                        }
+                        // Initialize array of `Group` class for UI
+                        let groups = grouped.map(contacts.initUIClass)
 
                         // Sort groups alphabetically
                         let sortedGroups = groups.sorted { $0.position < $1.position }
-
+                        
                         self.groups = sortedGroups
 
                     case .failure(let error):
@@ -131,5 +111,29 @@ final class ContactsViewModel: ContactsViewModelType {
 
     func pushContactViewController(contact: CNContact) {
         flowDelegate?.pushContactViewController(for: contact)
+    }
+}
+
+fileprivate extension Array where Element == CNContact {
+    func initUIClass(position: Position, employees: [Employee]) -> Group {
+        let employees = employees.map { employee -> Group.Employee in
+            // Check if employee is saved as contact
+            let contact = first { contact in
+                contact.givenName.lowercased() == employee.firstName.lowercased() &&
+                    contact.familyName.lowercased() == employee.lastName.lowercased()
+            }
+
+            return Group.Employee(contact: contact,
+                                  firstName: employee.firstName,
+                                  lastName: employee.lastName,
+                                  position: employee.position,
+                                  details: employee.details,
+                                  projects: Array<String>(employee.projects))
+        }
+
+        // Sort employees by last name
+        let sortedEmployees = employees.sorted { $0.lastName < $1.lastName }
+
+        return Group(position: position, employees: sortedEmployees)
     }
 }
