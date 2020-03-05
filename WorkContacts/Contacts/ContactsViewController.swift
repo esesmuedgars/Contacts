@@ -57,6 +57,11 @@ final class ContactsViewController: UIViewController, ContactsViewModelDelegate,
 
     private var groups: [Group] {
         return isSearching ? viewModel.filteredGroups : viewModel.groups
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        
+        definesPresentationContext = true
     }
 
     override func viewDidLoad() {
@@ -102,7 +107,13 @@ final class ContactsViewController: UIViewController, ContactsViewModelDelegate,
                                                 message: viewModel.errorMessage,
                                                 preferredStyle: .alert)
 
-        let cancel = UIAlertAction(title: viewModel.cancelTitle, style: .cancel, handler: nil)
+        let cancel = UIAlertAction(title: viewModel.cancelTitle, style: .cancel) { [unowned self] _ in
+            guard self.refreshControl.isRefreshing else {
+                return
+            }
+            
+            self.refreshControl.endRefreshing()
+        }
         let retry = UIAlertAction(title: viewModel.retryTitle, style: .default) { [unowned self] _ in
             self.fetchEmployeeList()
         }
