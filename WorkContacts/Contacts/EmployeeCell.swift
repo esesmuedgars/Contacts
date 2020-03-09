@@ -12,7 +12,7 @@ protocol EmployeeCellDelegate: AnyObject {
     func employeeCellOpenContactInfo(contact: CNContact)
 }
 
-class EmployeeCell: UITableViewCell {
+final class EmployeeCell: UITableViewCell {
 
     @IBOutlet private var lastNameLabel: UILabel!
     @IBOutlet private var firstNameLabel: UILabel!

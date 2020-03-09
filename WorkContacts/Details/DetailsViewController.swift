@@ -64,7 +64,10 @@ final class DetailsViewController: UIViewController, UITableViewDataSource {
         phoneNumberStackView.isHidden = viewModel.withoutPhoneNumber
 
         if viewModel.isContact {
-            navigationItem.rightBarButtonItem = UIBarButtonItem(imageName: "Contact", style: .plain, target: self, selector: #selector(pushContactViewController))
+            navigationItem.rightBarButtonItem = UIBarButtonItem(imageName: "Contact",
+                                                                style: .plain,
+                                                                target: self,
+                                                                selector: #selector(pushContactViewController))
         }
     }
 
