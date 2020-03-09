@@ -64,11 +64,12 @@ final class ContactsViewModel: ContactsViewModelType {
                             grouped[$0.position, default: []].append($0)
                         }
 
-                        // Initialize array of `Group` class for UI
-                        let groups = grouped.map(contacts.initUIClass)
-
-                        // Sort groups alphabetically
-                        let sortedGroups = groups.sorted { $0.position < $1.position }
+                        // Initialize array of `Group` class user interface objects
+                        // Sort employees alphabetically by last name
+                        let groups = grouped.initUIClass(contacts, sortBy: <)
+                            
+                        // Sort groups alphabetically by position
+                        let sortedGroups = groups.sorted(by: <)
                         
                         self.groups = sortedGroups
 
@@ -115,25 +116,38 @@ final class ContactsViewModel: ContactsViewModelType {
 }
 
 fileprivate extension Array where Element == CNContact {
-    func initUIClass(position: Position, employees: [Employee]) -> Group {
-        let employees = employees.map { employee -> Group.Employee in
-            // Check if employee is saved as contact
-            let contact = first { contact in
-                contact.givenName.lowercased() == employee.firstName.lowercased() &&
-                    contact.familyName.lowercased() == employee.lastName.lowercased()
-            }
-
-            return Group.Employee(contact: contact,
-                                  firstName: employee.firstName,
-                                  lastName: employee.lastName,
-                                  position: employee.position,
-                                  details: employee.details,
-                                  projects: Array<String>(employee.projects))
+    
+    /// Check if employee is saved as contact by matching `givenName` with `firstName` and `familyName` with `lastName`.
+    /// - Parameter employee: `Employee` object used in comparison.
+    /// - returns: `CNContact` if localized case insensitive comparison result returned `.orderSame`, otherwise `nil`.
+    func existingContact(_ employee: Employee) -> CNContact? {
+        first { contact in
+            contact.givenName.isEqualCaseInsensitive(employee.firstName) &&
+                contact.familyName.isEqualCaseInsensitive(employee.lastName)
         }
+    }
+}
 
-        // Sort employees by last name
-        let sortedEmployees = employees.sorted { $0.lastName < $1.lastName }
-
-        return Group(position: position, employees: sortedEmployees)
+fileprivate extension Dictionary where Key == Position, Value == [Employee] {
+    
+    /// Initialize array of `Group` class user interface objects with sorted employees using given predicate.
+    /// - Parameters:
+    ///   - contacts: List of contacts to match employees against.
+    ///   - areInIncreasingOrder: A predicate that returns `true` if its first argument should be ordered before its second argument, otherwise - `false`.
+    func initUIClass(_ contacts: [CNContact], sortBy areInIncreasingOrder: (Group.Employee, Group.Employee) -> Bool) -> [Group] {
+        map { position, employees in
+            let employees = employees.map { employee in
+                Group.Employee(contact: contacts.existingContact(employee),
+                               firstName: employee.firstName,
+                               lastName: employee.lastName,
+                               position: employee.position,
+                               details: employee.details,
+                               projects: Array(employee.projects))
+            }
+            
+            let sortedEmployees = employees.sorted(by: areInIncreasingOrder)
+            
+            return Group(position: position, employees: sortedEmployees)
+        }
     }
 }

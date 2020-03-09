@@ -13,6 +13,13 @@ extension String {
     func localized() -> String {
         NSLocalizedString(self, comment: self)
     }
+
+    /// Compares if the string and the given string are equal, using a case-insensitive, localized comparison.
+    ///
+    /// [How to compare two Strings ignoring case is Swift language](https://stackoverflow.com/questions/30532728/how-to-compare-two-strings-ignoring-case-in-swift-language).
+    func isEqualCaseInsensitive(_ string: String) -> Bool {
+        localizedCaseInsensitiveCompare(string) == .orderedSame
+    }
 }
 
 extension UIStoryboard {
