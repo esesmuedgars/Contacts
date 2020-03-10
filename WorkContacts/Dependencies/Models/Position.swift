@@ -5,7 +5,7 @@
 //  Created by @esesmuedgars
 //
 
-enum Position: String, Decodable, Hashable {
+enum Position: String, Decodable, Hashable, Comparable {
     case android = "ANDROID"
     case ios = "IOS"
     case other = "OTHER"
@@ -37,9 +37,7 @@ enum Position: String, Decodable, Hashable {
         case .web: return "contacts.position.details.title.web".localized()
         }
     }
-}
-
-extension Position {
+    
     static func <(lhs: Position, rhs: Position) -> Bool {
         lhs.rawValue < rhs.rawValue
     }

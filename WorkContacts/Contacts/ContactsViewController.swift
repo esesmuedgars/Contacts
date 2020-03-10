@@ -172,9 +172,10 @@ final class ContactsViewController: UIViewController, ContactsViewModelDelegate,
     // MARK: - UISearchResultsUpdating
 
     public func updateSearchResults(for searchController: UISearchController) {
-        if let string = searchController.searchBar.text {
-            viewModel.updateSearchResults(string)
+        guard let string = searchController.searchBar.text?.trimmingCharacters(in: .whitespacesAndNewlines) else {
+            return
         }
+                
+        viewModel.updateSearchResults(string)
     }
 }
-

@@ -87,23 +87,54 @@ final class ContactsViewModel: ContactsViewModelType {
             }
         }
     }
-
+    
     func updateSearchResults(_ string: String) {
-        let string = string.lowercased()
-
-        let filteredGroups = groups.compactMap { group -> Group? in
-            // Filter employees by first name, last name, email, projects or position
-            let filteredEmployees = group.employees.filter { employee in
-                return employee.firstName.lowercased().contains(string) || employee.lastName.lowercased().contains(string) || employee.position.fullTitle.lowercased().contains(string) ||
-                    employee.details.email.lowercased().contains(string) ||
-                    employee.projects.contains(where: { $0.lowercased().contains(string) })
+        let searchItems = string.components(separatedBy: .whitespaces)
+    
+        filteredGroups = filterGroups(filteredBy: searchItems)
+    }
+    
+    private func filterGroups(filteredBy strings: [String]) -> [Group] {
+        var filteredGroupList = [[Group]]()
+        
+        // Apply filter criteria using each individual string as predicate
+        for string in strings {
+            // Filter employees by first name, last name, email address, projects or position
+            let filteredGroups = groups.filter(filteredBy: string)
+    
+            filteredGroupList.append(filteredGroups)
+        }
+        
+        // Combine all filtered groups into single list with unique elements
+        let combinedFilteredGroups = filteredGroupList
+            .flatMap({ $0 })
+            .reduce([], { $0.contains($1) ? $0 : $0 + [$1] })
+        
+        var groupDictionary = [Position: [Group.Employee]]()
+        
+        // Merge employees of groups with matching positions
+        // Sort employees alphabetically by last name
+        combinedFilteredGroups.forEach { group in
+            var employees = groupDictionary[group.position, default: []]
+            
+            for employee in group.employees {
+                if !employees.contains(employee) {
+                    employees.append(contentsOf: group.employees)
+                }
             }
 
-            // Remove group if there are no employees
-            return filteredEmployees.isEmpty ? nil : Group(position: group.position, employees: filteredEmployees)
+            employees.sort(by: <)
+            
+            groupDictionary.updateValue(employees, forKey: group.position)
         }
-
-        self.filteredGroups = filteredGroups
+        
+        // Initialize array of `Group` class user interface objects
+        // Sort groups alphabetically by position
+        let result = groupDictionary
+            .map(Group.init)
+            .sorted(by: <)
+        
+        return result
     }
 
     func pushDetailsViewController(employee: Group.Employee) {
@@ -115,25 +146,12 @@ final class ContactsViewModel: ContactsViewModelType {
     }
 }
 
-fileprivate extension Array where Element == CNContact {
-    
-    /// Check if employee is saved as contact by matching `givenName` with `firstName` and `familyName` with `lastName`.
-    /// - Parameter employee: `Employee` object used in comparison.
-    /// - returns: `CNContact` if localized case insensitive comparison result returned `.orderSame`, otherwise `nil`.
-    func existingContact(_ employee: Employee) -> CNContact? {
-        first { contact in
-            contact.givenName.isEqualCaseInsensitive(employee.firstName) &&
-                contact.familyName.isEqualCaseInsensitive(employee.lastName)
-        }
-    }
-}
-
 fileprivate extension Dictionary where Key == Position, Value == [Employee] {
     
     /// Initialize array of `Group` class user interface objects with sorted employees using given predicate.
     /// - Parameters:
     ///   - contacts: List of contacts to match employees against.
-    ///   - areInIncreasingOrder: A predicate that returns `true` if its first argument should be ordered before its second argument, otherwise - `false`.
+    ///   - areInIncreasingOrder: A predicate that returns `true` if its first argument should be ordered before its second argument, otherwise `false`.
     func initUIClass(_ contacts: [CNContact], sortBy areInIncreasingOrder: (Group.Employee, Group.Employee) -> Bool) -> [Group] {
         map { position, employees in
             let employees = employees.map { employee in
@@ -148,6 +166,40 @@ fileprivate extension Dictionary where Key == Position, Value == [Employee] {
             let sortedEmployees = employees.sorted(by: areInIncreasingOrder)
             
             return Group(position: position, employees: sortedEmployees)
+        }
+    }
+}
+
+fileprivate extension Array where Element == CNContact {
+    
+    /// Check if employee is saved as contact by matching `givenName` with `firstName` and `familyName` with `lastName`.
+    /// - Parameter employee: `Employee` object used in comparison.
+    /// - returns: `CNContact` if localized case insensitive comparison result returned `orderSame`, otherwise `nil`.
+    func existingContact(_ employee: Employee) -> CNContact? {
+        first { contact in
+            contact.givenName.isEqualCaseInsensitive(employee.firstName) &&
+                contact.familyName.isEqualCaseInsensitive(employee.lastName)
+        }
+    }
+}
+
+fileprivate extension Array where Element == Group {
+    
+    /// Returns array of `Group` with values where given string was contained within employee's first name, last name, email address, projects or position.
+    /// - Parameter string: Predicate used employee filteration in case-insensitive, non-literal search, taking into account the current locale.
+    func filter(filteredBy string: String) -> [Group] {
+        compactMap { group -> Group? in
+            var mutatingGroup = group
+            
+            mutatingGroup.employees = group.employees.filter { employee in
+                employee.firstName.localizedCaseInsensitiveContains(string) ||
+                    employee.lastName.localizedCaseInsensitiveContains(string) ||
+                    employee.position.fullTitle.localizedCaseInsensitiveContains(string) ||
+                    employee.details.email.localizedCaseInsensitiveContains(string) ||
+                    employee.projects.contains(where: { $0.localizedCaseInsensitiveContains(string) })
+            }
+            
+            return mutatingGroup.employees.isEmpty ? nil : mutatingGroup
         }
     }
 }
