@@ -114,7 +114,6 @@ final class ContactsViewModel: ContactsViewModelType {
 }
 
 fileprivate extension Dictionary where Key == Position, Value == [Employee] {
-    
     /// Initialize array of `Group` class user interface objects with sorted employees using given predicate.
     /// - Parameters:
     ///   - contacts: List of contacts to match employees against.
@@ -138,10 +137,7 @@ fileprivate extension Dictionary where Key == Position, Value == [Employee] {
 }
 
 fileprivate extension Array where Element == CNContact {
-    
-    /// Check if employee is saved as contact by matching `givenName` with `firstName` and `familyName` with `lastName`.
-    /// - Parameter employee: `Employee` object used in comparison.
-    /// - returns: `CNContact` if localized case insensitive comparison result returned `orderSame`, otherwise `nil`.
+    /// Check if employee is saved as contact by matching first and last names.
     func existingContact(_ employee: Employee) -> CNContact? {
         first { contact in
             contact.givenName.isEqualCaseInsensitive(employee.firstName) &&
@@ -151,14 +147,12 @@ fileprivate extension Array where Element == CNContact {
 }
 
 fileprivate extension Array where Element == Group {
-    
-    /// Returns array of `Group` with values where given string was contained within employee's first name, last name, email address, projects or position.
-    /// - Parameter string: Predicate used employee filteration in case-insensitive, non-literal search, taking into account the current locale.
+    /// Filters employees containing, in order, employees that contain predicate in first name, last name, email address, projects or position.
     mutating func filter(filteredBy string: String) {
         self = map { group in
-            var mutatingGroup = group
+            var mutable = group
             
-            mutatingGroup.employees = group.employees.filter { employee in
+            mutable.employees = group.employees.filter { employee in
                 employee.firstName.localizedCaseInsensitiveContains(string) ||
                     employee.lastName.localizedCaseInsensitiveContains(string) ||
                     employee.position.fullTitle.localizedCaseInsensitiveContains(string) ||
@@ -166,7 +160,7 @@ fileprivate extension Array where Element == Group {
                     employee.projects.contains(where: { $0.localizedCaseInsensitiveContains(string) })
             }
             
-            return mutatingGroup
+            return mutable
         }
     }
 }
