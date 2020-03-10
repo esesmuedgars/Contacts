@@ -89,52 +89,19 @@ final class ContactsViewModel: ContactsViewModelType {
     }
     
     func updateSearchResults(_ string: String) {
-        let searchItems = string.components(separatedBy: .whitespaces)
-    
-        filteredGroups = filterGroups(filteredBy: searchItems)
-    }
-    
-    private func filterGroups(filteredBy strings: [String]) -> [Group] {
-        var filteredGroupList = [[Group]]()
+        let searchItems = string
+            .components(separatedBy: .whitespaces)
+            .remove({ strings, string in
+                strings.contains(where: { $0.contains(string) })
+            })
         
-        // Apply filter criteria using each individual string as predicate
-        for string in strings {
-            // Filter employees by first name, last name, email address, projects or position
-            let filteredGroups = groups.filter(filteredBy: string)
-    
-            filteredGroupList.append(filteredGroups)
+        var filteredGroups = groups
+        
+        searchItems.forEach { string in
+            filteredGroups.filter(filteredBy: string)
         }
         
-        // Combine all filtered groups into single list with unique elements
-        let combinedFilteredGroups = filteredGroupList
-            .flatMap({ $0 })
-            .reduce([], { $0.contains($1) ? $0 : $0 + [$1] })
-        
-        var groupDictionary = [Position: [Group.Employee]]()
-        
-        // Merge employees of groups with matching positions
-        // Sort employees alphabetically by last name
-        combinedFilteredGroups.forEach { group in
-            var employees = groupDictionary[group.position, default: []]
-            
-            for employee in group.employees {
-                if !employees.contains(employee) {
-                    employees.append(contentsOf: group.employees)
-                }
-            }
-
-            employees.sort(by: <)
-            
-            groupDictionary.updateValue(employees, forKey: group.position)
-        }
-        
-        // Initialize array of `Group` class user interface objects
-        // Sort groups alphabetically by position
-        let result = groupDictionary
-            .map(Group.init)
-            .sorted(by: <)
-        
-        return result
+        self.filteredGroups = filteredGroups
     }
 
     func pushDetailsViewController(employee: Group.Employee) {
@@ -187,8 +154,8 @@ fileprivate extension Array where Element == Group {
     
     /// Returns array of `Group` with values where given string was contained within employee's first name, last name, email address, projects or position.
     /// - Parameter string: Predicate used employee filteration in case-insensitive, non-literal search, taking into account the current locale.
-    func filter(filteredBy string: String) -> [Group] {
-        compactMap { group -> Group? in
+    mutating func filter(filteredBy string: String) {
+        self = map { group in
             var mutatingGroup = group
             
             mutatingGroup.employees = group.employees.filter { employee in
@@ -199,7 +166,7 @@ fileprivate extension Array where Element == Group {
                     employee.projects.contains(where: { $0.localizedCaseInsensitiveContains(string) })
             }
             
-            return mutatingGroup.employees.isEmpty ? nil : mutatingGroup
+            return mutatingGroup
         }
     }
 }

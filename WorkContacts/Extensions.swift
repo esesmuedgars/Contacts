@@ -15,12 +15,18 @@ extension String {
     }
 
     /// Compares if the string and the given string are equal, using a case-insensitive, localized comparison.
-    ///
-    /// [How to compare two Strings ignoring case is Swift language](https://stackoverflow.com/questions/30532728/how-to-compare-two-strings-ignoring-case-in-swift-language).
     func isEqualCaseInsensitive(_ string: String) -> Bool {
         localizedCaseInsensitiveCompare(string) == .orderedSame
     }
 }
+
+extension Array where Element: Comparable {
+    /// Remove all values from the collection that match closure predicate.
+    func remove(_ isExcluded: (Array, Array.Element) -> Bool) -> [Element] {
+        reduce([], { isExcluded($0, $1) ? $0 : $0 + [$1] })
+    }
+}
+
 
 extension UIStoryboard {
     func instantiateViewController<Controller: UIViewController>(ofType type: Controller.Type) -> Controller {
