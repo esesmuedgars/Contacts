@@ -26,13 +26,25 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "YES">
+      shouldUseLaunchSchemeArgsEnv = "YES"
+      language = "en"
+      codeCoverageEnabled = "YES"
+      onlyGenerateCoverageForSpecifiedTargets = "YES">
+      <CodeCoverageTargets>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "7276AEC6236329B1000D5211"
+            BuildableName = "WorkContacts.app"
+            BlueprintName = "WorkContacts"
+            ReferencedContainer = "container:WorkContacts.xcodeproj">
+         </BuildableReference>
+      </CodeCoverageTargets>
       <Testables>
          <TestableReference
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "720F67022363B39C003DDBEF"
+               BlueprintIdentifier = "6533EAD5241A341D006C65CD"
                BuildableName = "WorkContactsTests.xctest"
                BlueprintName = "WorkContactsTests"
                ReferencedContainer = "container:WorkContacts.xcodeproj">

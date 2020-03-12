@@ -3,10 +3,17 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6533EAE1241A3490006C65CD /* ContactsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6533EAE0241A3490006C65CD /* ContactsViewModelTests.swift */; };
+		6533EAE3241A53F3006C65CD /* APIServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6533EAE2241A53F3006C65CD /* APIServiceMock.swift */; };
+		6533EAE5241A5419006C65CD /* ContactsServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6533EAE4241A5419006C65CD /* ContactsServiceMock.swift */; };
+		6533EAE7241A5489006C65CD /* TestClassContactsViewModelDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6533EAE6241A5489006C65CD /* TestClassContactsViewModelDelegate.swift */; };
+		6533EAE9241A54AE006C65CD /* TestClassCoordinatorFlowDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6533EAE8241A54AE006C65CD /* TestClassCoordinatorFlowDelegate.swift */; };
+		6534AB9D241A7A38003FC76A /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6534AB9C241A7A38003FC76A /* Helpers.swift */; };
+		6534AB9F241A7A62003FC76A /* DetailsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6534AB9E241A7A62003FC76A /* DetailsViewModelTests.swift */; };
 		65A4ED3D24111F0E0024FBD0 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 65A4ED3F24111F0E0024FBD0 /* Localizable.strings */; };
 		720F670E2363B523003DDBEF /* ContactsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720F670D2363B523003DDBEF /* ContactsService.swift */; };
 		722DFB2A23637A04005E9BAE /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 722DFB2923637A04005E9BAE /* DetailsViewController.swift */; };
@@ -32,7 +39,26 @@
 		72E1394823677680009049CB /* ProjectCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72E1394723677680009049CB /* ProjectCell.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		6533EADB241A341D006C65CD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7276AEBF236329B1000D5211 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7276AEC6236329B1000D5211;
+			remoteInfo = WorkContacts;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		6533EAD6241A341D006C65CD /* WorkContactsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WorkContactsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		6533EADA241A341D006C65CD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6533EAE0241A3490006C65CD /* ContactsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsViewModelTests.swift; sourceTree = "<group>"; };
+		6533EAE2241A53F3006C65CD /* APIServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIServiceMock.swift; sourceTree = "<group>"; };
+		6533EAE4241A5419006C65CD /* ContactsServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsServiceMock.swift; sourceTree = "<group>"; };
+		6533EAE6241A5489006C65CD /* TestClassContactsViewModelDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestClassContactsViewModelDelegate.swift; sourceTree = "<group>"; };
+		6533EAE8241A54AE006C65CD /* TestClassCoordinatorFlowDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestClassCoordinatorFlowDelegate.swift; sourceTree = "<group>"; };
+		6534AB9C241A7A38003FC76A /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
+		6534AB9E241A7A62003FC76A /* DetailsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewModelTests.swift; sourceTree = "<group>"; };
 		65A4ED4024111F0F0024FBD0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		65A4ED43241121B90024FBD0 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		720F670D2363B523003DDBEF /* ContactsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsService.swift; sourceTree = "<group>"; };
@@ -62,6 +88,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		6533EAD3241A341D006C65CD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		7276AEC4236329B1000D5211 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -72,6 +105,37 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6533EAD7241A341D006C65CD /* WorkContactsTests */ = {
+			isa = PBXGroup;
+			children = (
+				6533EAEA241A5C32006C65CD /* Dependencies */,
+				6533EAEB241A5C47006C65CD /* Delegates */,
+				6533EAE0241A3490006C65CD /* ContactsViewModelTests.swift */,
+				6534AB9E241A7A62003FC76A /* DetailsViewModelTests.swift */,
+				6534AB9C241A7A38003FC76A /* Helpers.swift */,
+				6533EADA241A341D006C65CD /* Info.plist */,
+			);
+			path = WorkContactsTests;
+			sourceTree = "<group>";
+		};
+		6533EAEA241A5C32006C65CD /* Dependencies */ = {
+			isa = PBXGroup;
+			children = (
+				6533EAE2241A53F3006C65CD /* APIServiceMock.swift */,
+				6533EAE4241A5419006C65CD /* ContactsServiceMock.swift */,
+			);
+			path = Dependencies;
+			sourceTree = "<group>";
+		};
+		6533EAEB241A5C47006C65CD /* Delegates */ = {
+			isa = PBXGroup;
+			children = (
+				6533EAE8241A54AE006C65CD /* TestClassCoordinatorFlowDelegate.swift */,
+				6533EAE6241A5489006C65CD /* TestClassContactsViewModelDelegate.swift */,
+			);
+			path = Delegates;
+			sourceTree = "<group>";
+		};
 		722DFB2F2363826F005E9BAE /* Dependencies */ = {
 			isa = PBXGroup;
 			children = (
@@ -110,6 +174,7 @@
 			isa = PBXGroup;
 			children = (
 				7276AEC9236329B1000D5211 /* WorkContacts */,
+				6533EAD7241A341D006C65CD /* WorkContactsTests */,
 				7276AEC8236329B1000D5211 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -118,6 +183,7 @@
 			isa = PBXGroup;
 			children = (
 				7276AEC7236329B1000D5211 /* WorkContacts.app */,
+				6533EAD6241A341D006C65CD /* WorkContactsTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -154,6 +220,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		6533EAD5241A341D006C65CD /* WorkContactsTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6533EADF241A341D006C65CD /* Build configuration list for PBXNativeTarget "WorkContactsTests" */;
+			buildPhases = (
+				6533EAD2241A341D006C65CD /* Sources */,
+				6533EAD3241A341D006C65CD /* Frameworks */,
+				6533EAD4241A341D006C65CD /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				6533EADC241A341D006C65CD /* PBXTargetDependency */,
+			);
+			name = WorkContactsTests;
+			productName = WorkContactsTests;
+			productReference = 6533EAD6241A341D006C65CD /* WorkContactsTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		7276AEC6236329B1000D5211 /* WorkContacts */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7276AEE9236329B3000D5211 /* Build configuration list for PBXNativeTarget "WorkContacts" */;
@@ -177,10 +261,14 @@
 		7276AEBF236329B1000D5211 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1110;
+				LastSwiftUpdateCheck = 1130;
 				LastUpgradeCheck = 1110;
 				ORGANIZATIONNAME = "Mooncascade OÜ";
 				TargetAttributes = {
+					6533EAD5241A341D006C65CD = {
+						CreatedOnToolsVersion = 11.3;
+						TestTargetID = 7276AEC6236329B1000D5211;
+					};
 					7276AEC6236329B1000D5211 = {
 						CreatedOnToolsVersion = 11.1;
 					};
@@ -201,11 +289,19 @@
 			projectRoot = "";
 			targets = (
 				7276AEC6236329B1000D5211 /* WorkContacts */,
+				6533EAD5241A341D006C65CD /* WorkContactsTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		6533EAD4241A341D006C65CD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		7276AEC5236329B1000D5211 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -220,6 +316,20 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		6533EAD2241A341D006C65CD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6533EAE1241A3490006C65CD /* ContactsViewModelTests.swift in Sources */,
+				6534AB9D241A7A38003FC76A /* Helpers.swift in Sources */,
+				6533EAE9241A54AE006C65CD /* TestClassCoordinatorFlowDelegate.swift in Sources */,
+				6533EAE5241A5419006C65CD /* ContactsServiceMock.swift in Sources */,
+				6534AB9F241A7A62003FC76A /* DetailsViewModelTests.swift in Sources */,
+				6533EAE3241A53F3006C65CD /* APIServiceMock.swift in Sources */,
+				6533EAE7241A5489006C65CD /* TestClassContactsViewModelDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		7276AEC3236329B1000D5211 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -247,6 +357,15 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		6533EADC241A341D006C65CD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			platformFilter = ios;
+			target = 7276AEC6236329B1000D5211 /* WorkContacts */;
+			targetProxy = 6533EADB241A341D006C65CD /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		65A4ED3F24111F0E0024FBD0 /* Localizable.strings */ = {
@@ -277,6 +396,48 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		6533EADD241A341D006C65CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = RB8S8SFW6F;
+				INFOPLIST_FILE = WorkContactsTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = organization.WorkContactsTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WorkContacts.app/WorkContacts";
+			};
+			name = Debug;
+		};
+		6533EADE241A341D006C65CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = RB8S8SFW6F;
+				INFOPLIST_FILE = WorkContactsTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = organization.WorkContactsTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WorkContacts.app/WorkContacts";
+			};
+			name = Release;
+		};
 		7276AEE7236329B3000D5211 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -434,6 +595,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		6533EADF241A341D006C65CD /* Build configuration list for PBXNativeTarget "WorkContactsTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6533EADD241A341D006C65CD /* Debug */,
+				6533EADE241A341D006C65CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		7276AEC2236329B1000D5211 /* Build configuration list for PBXProject "WorkContacts" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
