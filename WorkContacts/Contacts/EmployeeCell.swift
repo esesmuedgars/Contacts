@@ -8,7 +8,7 @@
 import UIKit
 import ContactsUI
 
-protocol EmployeeCellDelegate: AnyObject {
+protocol EmployeeCellDelegate: class {
     func employeeCellOpenContactInfo(contact: CNContact)
 }
 

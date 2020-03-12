@@ -18,9 +18,9 @@ private extension Coordinator {
     }
 }
 
-protocol CoordinatorFlowDelegate: AnyObject {
-    func pushDetailsViewController(for: Group.Employee)
-    func pushContactViewController(for: CNContact)
+protocol CoordinatorFlowDelegate: class {
+    func pushDetailsViewController(for employee: Group.Employee)
+    func pushContactViewController(for contact: CNContact)
 }
 
 final class AppCoordinator: Coordinator, CoordinatorFlowDelegate {

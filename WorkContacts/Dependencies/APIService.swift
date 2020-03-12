@@ -32,7 +32,7 @@ extension APIServiceError {
 typealias EmployeeListCompletionBlock = (Result<Set<Employee>, APIServiceError>) -> Void
 
 protocol APIServiceProtocol {
-    func fetchEmployeeList(completionHandler: @escaping EmployeeListCompletionBlock)
+    func fetchEmployeeList(completionHandler complete: @escaping EmployeeListCompletionBlock)
 }
 
 final class APIService: APIServiceProtocol {

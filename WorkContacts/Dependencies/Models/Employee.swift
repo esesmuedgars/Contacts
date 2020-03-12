@@ -5,13 +5,15 @@
 //  Created by @esesmuedgars
 //
 
-struct Employee: Decodable, Hashable {
+struct Employee: Hashable {
     let firstName: String
     let lastName: String
     let position: Position
     let details: Details
     let projects: Set<String>
+}
 
+extension Employee: Decodable {
     private enum CodingKeys: String, CodingKey {
         case firstName = "fname"
         case lastName = "lname"

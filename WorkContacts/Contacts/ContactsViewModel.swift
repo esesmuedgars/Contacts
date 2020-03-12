@@ -8,7 +8,7 @@
 import Foundation
 import Contacts
 
-protocol ContactsViewModelDelegate: AnyObject {
+protocol ContactsViewModelDelegate: class {
     func viewModelDidFetchGroups()
     func viewModelDidFail(withServiceError error: ServiceError)
     func viewModelDidUpdateSearchResults()
