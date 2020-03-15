@@ -8,7 +8,7 @@
 import Foundation
 import Contacts
 
-protocol ContactsViewModelDelegate: AnyObject {
+protocol ContactsViewModelDelegate: class {
     func viewModelDidFetchGroups()
     func viewModelDidFail(withServiceError error: ServiceError)
     func viewModelDidUpdateSearchResults()
@@ -38,12 +38,12 @@ final class ContactsViewModel: ContactsViewModelType {
         }
     }
 
-    let title = "Employees"
-    let placeholder = "Search"
-    let errorTitle = "Oops! Something went wrong!"
-    let errorMessage = "An error ocurred fetching employees or contacts. Please try again later."
-    let cancelTitle = "Cancel"
-    let retryTitle = "Retry"
+    let title = "contacts.navigation.title".localized()
+    let placeholder = "contacts.navigation.search.placeholder".localized()
+    let errorTitle = "contacts.error.alert.title".localized()
+    let errorMessage = "contacts.error.alert.message".localized()
+    let cancelTitle = "contacts.error.alert.button.cancel".localized()
+    let retryTitle = "contacts.error.alert.button.retry".localized()
 
     init(apiService: APIServiceProtocol = Dependencies.shared.apiService,
          contactsService: ContactsServiceProtocol = Dependencies.shared.contactsService) {
@@ -55,7 +55,7 @@ final class ContactsViewModel: ContactsViewModelType {
         apiService.fetchEmployeeList { [unowned self] result in
             switch result {
             case .success(let employees):
-                self.contactsService.fetchContactList { result in
+                self.contactsService.fetchContactList { [unowned self] result in
                     switch result {
                     case .success(let contacts):
                         // Group employees by position
@@ -64,32 +64,13 @@ final class ContactsViewModel: ContactsViewModelType {
                             grouped[$0.position, default: []].append($0)
                         }
 
-                        // Initialize `Group` class for UI
-                        let groups = grouped.map { (position, employees) -> Group in
-                            let employees = employees.map { employee -> Group.Employee in
-                                // Check if employee is saved as contact
-                                let contact = contacts.first { contact in
-                                    contact.givenName.lowercased() == employee.firstName.lowercased() &&
-                                        contact.familyName.lowercased() == employee.lastName.lowercased()
-                                }
-
-                                return Group.Employee(contact: contact,
-                                                      firstName: employee.firstName,
-                                                      lastName: employee.lastName,
-                                                      position: employee.position,
-                                                      details: employee.details,
-                                                      projects: Array(employee.projects))
-                            }
-
-                            // Sort employees by last name
-                            let sortedEmployees = employees.sorted { $0.lastName < $1.lastName }
-
-                            return Group(position: position, employees: sortedEmployees)
-                        }
-
-                        // Sort groups alphabetically
-                        let sortedGroups = groups.sorted { $0.position < $1.position }
-
+                        // Initialize array of `Group` class user interface objects
+                        // Sort employees alphabetically by last name
+                        let groups = grouped.initUIClass(contacts, sortBy: <)
+                            
+                        // Sort groups alphabetically by position
+                        let sortedGroups = groups.sorted(by: <)
+                        
                         self.groups = sortedGroups
 
                     case .failure(let error):
@@ -106,22 +87,20 @@ final class ContactsViewModel: ContactsViewModelType {
             }
         }
     }
-
+    
     func updateSearchResults(_ string: String) {
-        let string = string.lowercased()
-
-        let filteredGroups = groups.compactMap { group -> Group? in
-            // Filter employees by first name, last name, email, projects or position
-            let filteredEmployees = group.employees.filter { employee in
-                return employee.firstName.lowercased().contains(string) || employee.lastName.lowercased().contains(string) || employee.position.fullTitle.lowercased().contains(string) ||
-                    employee.details.email.lowercased().contains(string) ||
-                    employee.projects.contains(where: { $0.lowercased().contains(string) })
-            }
-
-            // Remove group if there are no employees
-            return filteredEmployees.isEmpty ? nil : Group(position: group.position, employees: filteredEmployees)
+        let searchItems = string
+            .components(separatedBy: .whitespaces)
+            .remove({ strings, string in
+                strings.contains(where: { $0.contains(string) })
+            })
+        
+        var filteredGroups = groups
+        
+        searchItems.forEach { string in
+            filteredGroups.filter(filteredBy: string)
         }
-
+        
         self.filteredGroups = filteredGroups
     }
 
@@ -131,5 +110,57 @@ final class ContactsViewModel: ContactsViewModelType {
 
     func pushContactViewController(contact: CNContact) {
         flowDelegate?.pushContactViewController(for: contact)
+    }
+}
+
+fileprivate extension Dictionary where Key == Position, Value == [Employee] {
+    /// Initialize array of `Group` class user interface objects with sorted employees using given predicate.
+    /// - Parameters:
+    ///   - contacts: List of contacts to match employees against.
+    ///   - areInIncreasingOrder: A predicate that returns `true` if its first argument should be ordered before its second argument, otherwise `false`.
+    func initUIClass(_ contacts: [CNContact], sortBy areInIncreasingOrder: (Group.Employee, Group.Employee) -> Bool) -> [Group] {
+        map { position, employees in
+            let employees = employees.map { employee in
+                Group.Employee(contact: contacts.existingContact(employee),
+                               firstName: employee.firstName,
+                               lastName: employee.lastName,
+                               position: employee.position,
+                               details: employee.details,
+                               projects: Array(employee.projects))
+            }
+            
+            let sortedEmployees = employees.sorted(by: areInIncreasingOrder)
+            
+            return Group(position: position, employees: sortedEmployees)
+        }
+    }
+}
+
+fileprivate extension Array where Element == CNContact {
+    /// Check if employee is saved as contact by matching first and last names.
+    func existingContact(_ employee: Employee) -> CNContact? {
+        first { contact in
+            contact.givenName.isEqualCaseInsensitive(employee.firstName) &&
+                contact.familyName.isEqualCaseInsensitive(employee.lastName)
+        }
+    }
+}
+
+fileprivate extension Array where Element == Group {
+    /// Filters employees containing, in order, employees that contain predicate in first name, last name, email address, projects or position.
+    mutating func filter(filteredBy string: String) {
+        self = map { group in
+            var mutable = group
+            
+            mutable.employees = group.employees.filter { employee in
+                employee.firstName.localizedCaseInsensitiveContains(string) ||
+                    employee.lastName.localizedCaseInsensitiveContains(string) ||
+                    employee.position.fullTitle.localizedCaseInsensitiveContains(string) ||
+                    employee.details.email.localizedCaseInsensitiveContains(string) ||
+                    employee.projects.contains(where: { $0.localizedCaseInsensitiveContains(string) })
+            }
+            
+            return mutable
+        }
     }
 }

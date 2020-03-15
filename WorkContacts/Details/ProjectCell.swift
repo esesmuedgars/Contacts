@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ProjectCell: UITableViewCell {
+final class ProjectCell: UITableViewCell {
 
     @IBOutlet private var titleLabel: UILabel!
 

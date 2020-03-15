@@ -8,11 +8,11 @@
 import UIKit
 import ContactsUI
 
-protocol EmployeeCellDelegate: AnyObject {
+protocol EmployeeCellDelegate: class {
     func employeeCellOpenContactInfo(contact: CNContact)
 }
 
-class EmployeeCell: UITableViewCell {
+final class EmployeeCell: UITableViewCell {
 
     @IBOutlet private var lastNameLabel: UILabel!
     @IBOutlet private var firstNameLabel: UILabel!

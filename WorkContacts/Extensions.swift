@@ -9,15 +9,34 @@ import UIKit
 
 extension String: Error {}
 
+extension String {
+    func localized() -> String {
+        NSLocalizedString(self, comment: self)
+    }
+
+    /// Compares if the string and the given string are equal, using a case-insensitive, localized comparison.
+    func isEqualCaseInsensitive(_ string: String) -> Bool {
+        localizedCaseInsensitiveCompare(string) == .orderedSame
+    }
+}
+
+extension Array where Element: Comparable {
+    /// Remove all values from the collection that match closure predicate.
+    func remove(_ isExcluded: (Array, Array.Element) -> Bool) -> [Element] {
+        reduce([], { isExcluded($0, $1) ? $0 : $0 + [$1] })
+    }
+}
+
+
 extension UIStoryboard {
     func instantiateViewController<Controller: UIViewController>(ofType type: Controller.Type) -> Controller {
-        return instantiateViewController(withIdentifier: String(describing: type)) as! Controller
+        instantiateViewController(withIdentifier: String(describing: type)) as! Controller
     }
 }
 
 extension UITableView {
     func dequeueReusableCell<Cell: UITableViewCell>(ofType type: Cell.Type, for indexPath: IndexPath) -> Cell {
-        return dequeueReusableCell(withIdentifier: String(describing: type), for: indexPath) as! Cell
+        dequeueReusableCell(withIdentifier: String(describing: type), for: indexPath) as! Cell
     }
 
     func layoutTableHeaderView() {

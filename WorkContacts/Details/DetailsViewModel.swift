@@ -12,12 +12,12 @@ final class DetailsViewModel: DetailsViewModelType {
     weak var flowDelegate: CoordinatorFlowDelegate!
 
     var sectionHeaderTitle: String? {
-        return projects.isEmpty ? nil : "Projects"
+        projects.isEmpty ? nil : "details.title.projects".localized()
     }
 
-    let positionTitle = "POSITION"
-    let emailTitle = "E-MAIL"
-    let phoneNumberTitle = "PHONE NUMBER"
+    let positionTitle = "details.title.position".localized()
+    let emailTitle = "details.title.email".localized()
+    let phoneNumberTitle = "details.title.phone_number".localized()
 
     let fullName: String
     let position: String

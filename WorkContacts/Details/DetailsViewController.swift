@@ -64,7 +64,12 @@ final class DetailsViewController: UIViewController, UITableViewDataSource {
         phoneNumberStackView.isHidden = viewModel.withoutPhoneNumber
 
         if viewModel.isContact {
-            navigationItem.rightBarButtonItem = UIBarButtonItem(imageName: "Contact", style: .plain, target: self, selector: #selector(pushContactViewController))
+            navigationItem.rightBarButtonItem = UIBarButtonItem(
+                imageName: "Contact",
+                style: .plain,
+                target: self,
+                selector: #selector(pushContactViewController)
+            )
         }
     }
 
@@ -82,11 +87,11 @@ final class DetailsViewController: UIViewController, UITableViewDataSource {
     // MARK: - UITableViewDataSource
 
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return viewModel.sectionHeaderTitle
+        viewModel.sectionHeaderTitle
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.projects.count
+        viewModel.projects.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

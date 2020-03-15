@@ -56,7 +56,13 @@ final class ContactsViewController: UIViewController, ContactsViewModelDelegate,
     }
 
     private var groups: [Group] {
-        return isSearching ? viewModel.filteredGroups : viewModel.groups
+        isSearching ? viewModel.filteredGroups : viewModel.groups
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        
+        definesPresentationContext = true
     }
 
     override func viewDidLoad() {
@@ -102,7 +108,13 @@ final class ContactsViewController: UIViewController, ContactsViewModelDelegate,
                                                 message: viewModel.errorMessage,
                                                 preferredStyle: .alert)
 
-        let cancel = UIAlertAction(title: viewModel.cancelTitle, style: .cancel, handler: nil)
+        let cancel = UIAlertAction(title: viewModel.cancelTitle, style: .cancel) { [unowned self] _ in
+            guard self.refreshControl.isRefreshing else {
+                return
+            }
+            
+            self.refreshControl.endRefreshing()
+        }
         let retry = UIAlertAction(title: viewModel.retryTitle, style: .default) { [unowned self] _ in
             self.fetchEmployeeList()
         }
@@ -125,15 +137,15 @@ final class ContactsViewController: UIViewController, ContactsViewModelDelegate,
     // MARK: - UITableViewDataSource
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        return groups.count
+        groups.count
     }
 
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return groups[section].position.fullTitle
+        groups[section].position.fullTitle
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return groups[section].employees.count
+        groups[section].employees.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -160,9 +172,10 @@ final class ContactsViewController: UIViewController, ContactsViewModelDelegate,
     // MARK: - UISearchResultsUpdating
 
     public func updateSearchResults(for searchController: UISearchController) {
-        if let string = searchController.searchBar.text {
-            viewModel.updateSearchResults(string)
+        guard let string = searchController.searchBar.text?.trimmingCharacters(in: .whitespacesAndNewlines) else {
+            return
         }
+                
+        viewModel.updateSearchResults(string)
     }
 }
-

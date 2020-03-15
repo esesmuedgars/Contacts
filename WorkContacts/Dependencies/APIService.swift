@@ -32,10 +32,14 @@ extension APIServiceError {
 typealias EmployeeListCompletionBlock = (Result<Set<Employee>, APIServiceError>) -> Void
 
 protocol APIServiceProtocol {
-    func fetchEmployeeList(completionHandler: @escaping EmployeeListCompletionBlock)
+    func fetchEmployeeList(completionHandler complete: @escaping EmployeeListCompletionBlock)
 }
 
 final class APIService: APIServiceProtocol {
+    
+    private let dispatchGroup = DispatchGroup()
+    private let dispatchQueue = DispatchQueue(label: "APIServiceWorkSerialQueue",
+                                              qos: .userInitiated)
 
     private func fetchEmployees(location: Base, completionHandler complete: @escaping EmployeeListCompletionBlock) {
         guard let url = Endpoint.employees.url(base: location) else {
@@ -66,23 +70,42 @@ final class APIService: APIServiceProtocol {
     // MARK: - APIServiceProtocol
 
     func fetchEmployeeList(completionHandler complete: @escaping EmployeeListCompletionBlock) {
-        fetchEmployees(location: .tartu) { [unowned self] result in
-            switch result {
-            case .success(let tartuEmployees):
-                self.fetchEmployees(location: .tallinn) { result in
-                    switch result {
-                    case .success(let tallinnEmployees):
-                        let employees = tartuEmployees.union(tallinnEmployees)
-                        complete(.success(employees))
+        var employees = Set<Employee>()
 
-                    case .failure(let error):
-                        complete(.failure(error))
+        dispatchGroup.enter()
+        
+        fetchEmployees(location: .tartu) { [unowned self] result in
+                switch result {
+                case .success(let tartuEmployees):
+                    self.dispatchQueue.sync {
+                        employees = employees.union(tartuEmployees)
                     }
+
+                case .failure(let error):
+                    complete(.failure(error))
+                }
+
+                self.dispatchGroup.leave()
+            }
+
+        dispatchGroup.enter()
+        
+        fetchEmployees(location: .tallinn) { [unowned self] result in
+            switch result {
+            case .success(let tallinnEmployees):
+                self.dispatchQueue.sync {
+                    employees = employees.union(tallinnEmployees)
                 }
 
             case .failure(let error):
                 complete(.failure(error))
             }
+
+            self.dispatchGroup.leave()
+        }
+    
+        dispatchGroup.notify(queue: .global(qos: .userInitiated)) {
+            complete(.success(employees))
         }
     }
 }
